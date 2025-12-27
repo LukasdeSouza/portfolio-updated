@@ -1,23 +1,40 @@
 import './App.css';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { useState } from 'react';
+// import Me from './assets/me.JPG'
 
 function App() {
+  const [mouseEnter, setMouseEnter] = useState<boolean>(false);
+  const [projectId, setProjectId] = useState<string>('');
+
+  const handleMouseEnterProjectItem = (projectId: string) => {
+    setProjectId(projectId)
+    setMouseEnter(true);
+  };
+
+
   const projects = [
     {
       id: '01',
       name: 'Eleitor360',
-      description: 'A comprehensive electoral platform designed to streamline political campaign management and voter engagement.'
+      description: 'A comprehensive electoral platform designed to streamline political campaign management and voter engagement.',
+      link: 'https://eleitor360-ench.vercel.app/login',
+      access: 'email: fernando123@gmail.com, password: Lukaszouza11@',
     },
     {
       id: '02',
       name: 'Meltt Facil',
-      description: 'An innovative solution simplifying complex processes through intuitive design and robust functionality.'
+      description: 'An innovative solution simplifying complex processes through intuitive design and robust functionality.',
+      link: 'https://www.melttfacil.com.br',
+      access: 'email: admin@meltt.com.br, password: senha123'
     },
     {
       id: '03',
       name: 'Eduflex',
-      description: 'Educational technology platform revolutionizing learning experiences with AI-powered features and adaptive content.'
+      description: 'Educational technology platform revolutionizing learning experiences with AI-powered features and adaptive content.',
+      link: 'http://app.eduflexeducacao.com.br',
+      access: 'email: admin@eduflexeducacao.com.br, password: senha123'
     }
   ];
 
@@ -117,25 +134,32 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-8 py-16 md:py-24">
-        <header className="mb-24">
+        <header className="mb-12">
+          <img
+            className='rounded-full mb-4'
+            src={'https://media.licdn.com/dms/image/v2/D4D03AQE9Q2bWi7g4FA/profile-displayphoto-scale_200_200/B4DZhg_JJmGsAg-/0/1753973823070?e=1768435200&v=beta&t=7abvwH52JKCCetA5jq4kWGWwtndhM_UqS8FvcWfWcs0'}
+            alt="Lucas de Souza Silva"
+            width={120} />
           <h1 className="text-5xl md:text-6xl font-serif font-normal mb-6 leading-tight tracking-tight">
-            Programmer specialized in building scalable products from concept to production
+            I'm a tech person specialized in building scalable products and help teams achieve their potential
           </h1>
-          <p className="text-lg text-neutral-600 leading-relaxed max-w-2xl">
-            I focus on end-to-end product development, working across frontend, backend,
-            and infrastructure to ship fast while maintaining high quality standards.
-          </p>
+          <p className='text-slate-500 hover:underline'>Get Startups to create awesome products (<i>Eduflex achieve  500k funding in a year</i>), run a team of developers, talk with customers and create MVP's, thats my passion!</p>
+          <a className='text-slate-500 mt-2' href="https://www.linkedin.com/in/lucassouzacodetech/" target='_blank'>Linkedin</a>
         </header>
 
         <section className="mb-24">
           <div className="mb-12">
-            <h2 className="text-sm uppercase tracking-wider text-neutral-500 mb-8">Select Work</h2>
+            <h2 className="text-sm uppercase tracking-wider text-neutral-500 mb-8">PROJECTS</h2>
             <Separator className="bg-neutral-200" />
           </div>
 
           <div className="space-y-12">
             {projects.map((project) => (
-              <div key={project.id} className="group">
+              <div key={project.id}
+                className="group hover:scale-105 transition-all ease-in-out cursor-pointer p-4 rounded-sm hover:bg-slate-50"
+                onClick={() => window.open(project.link, '_blank')}
+                onMouseEnter={() => handleMouseEnterProjectItem(project.id)}
+              >
                 <div className="flex items-baseline gap-4 mb-3">
                   <span className="text-sm text-neutral-400 font-mono">{project.id}</span>
                   <h3 className="text-2xl font-serif">{project.name}</h3>
@@ -143,6 +167,14 @@ function App() {
                 <p className="text-neutral-600 leading-relaxed pl-12">
                   {project.description}
                 </p>
+                {mouseEnter && projectId === project.id && (
+                  <div className='px-4 py-2 slide-in-from-top-1'>
+                    <div className='flex flex-col'>
+                      <small className='text-slate-600 font-semibold'>Use these credentials to access:</small>
+                      <small className='text-slate-400'>{project.access}</small>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
